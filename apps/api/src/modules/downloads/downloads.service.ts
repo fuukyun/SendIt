@@ -13,14 +13,14 @@ import type {
   UnlockTransferResponse,
 } from '@sendit/shared';
 import { createHmac } from 'node:crypto';
-import { APP_CONFIG } from '../config/config.module.js';
-import type { AppConfig } from '../config/config.js';
-import { TransferStatus, type Transfer } from '../generated/prisma/client.js';
-import { PrismaService } from '../prisma/prisma.service.js';
-import { AccessTokens } from '../security/access-tokens.js';
-import { verifyPassword } from '../security/passwords.js';
-import { hashToken } from '../security/tokens.js';
-import { StorageService } from '../storage/storage.service.js';
+import { APP_CONFIG } from '../../core/config/config.module.js';
+import type { AppConfig } from '../../core/config/config.js';
+import { TransferStatus, type Transfer } from '../../generated/prisma/client.js';
+import { PrismaService } from '../../core/database/prisma.service.js';
+import { AccessTokens } from '../../common/crypto/access-tokens.js';
+import { verifyPassword } from '../../common/crypto/passwords.js';
+import { hashToken } from '../../common/crypto/tokens.js';
+import { StorageService } from '../../core/storage/storage.service.js';
 import { attachmentDisposition } from './content-disposition.js';
 
 const SHARE_TOKEN = /^[A-Za-z0-9_-]{43}$/;

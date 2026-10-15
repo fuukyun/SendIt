@@ -2,7 +2,7 @@
 CREATE SCHEMA IF NOT EXISTS "public";
 
 -- CreateEnum
-CREATE TYPE "TransferStatus" AS ENUM ('UPLOADING', 'PROCESSING', 'READY', 'REJECTED', 'INFECTED', 'EXPIRED', 'DELETED');
+CREATE TYPE "TransferStatus" AS ENUM ('UPLOADING', 'READY', 'REJECTED', 'EXPIRED', 'DELETED');
 
 -- CreateTable
 CREATE TABLE "transfers" (
@@ -19,15 +19,11 @@ CREATE TABLE "transfers" (
     "locked_until" TIMESTAMP(3),
     "status" "TransferStatus" NOT NULL DEFAULT 'UPLOADING',
     "file_name" TEXT NOT NULL,
-    "content_type" TEXT NOT NULL,
-    "detected_type" TEXT,
     "size" BIGINT NOT NULL,
     "storage_key" TEXT NOT NULL,
     "upload_id" TEXT,
     "part_size" INTEGER,
     "part_count" INTEGER,
-    "scan_result" TEXT,
-    "scanned_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted_at" TIMESTAMP(3),

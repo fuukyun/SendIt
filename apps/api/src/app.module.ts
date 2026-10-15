@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
-import { CleanupModule } from './cleanup/cleanup.module.js';
-import { ConfigModule } from './config/config.module.js';
-import { DownloadsModule } from './downloads/downloads.module.js';
-import { HealthController } from './health/health.controller.js';
-import { PrismaModule } from './prisma/prisma.module.js';
-import { SecurityModule } from './security/security.module.js';
-import { StorageModule } from './storage/storage.module.js';
-import { TransfersModule } from './transfers/transfers.module.js';
+import { ConfigModule } from './core/config/config.module.js';
+import { PrismaModule } from './core/database/prisma.module.js';
+import { RateLimitModule } from './core/rate-limit/rate-limit.module.js';
+import { StorageModule } from './core/storage/storage.module.js';
+import { CleanupModule } from './modules/cleanup/cleanup.module.js';
+import { DownloadsModule } from './modules/downloads/downloads.module.js';
+import { HealthController } from './modules/health/health.controller.js';
+import { TransfersModule } from './modules/transfers/transfers.module.js';
 
 @Module({
   imports: [
+    // Infrastructure
     ConfigModule,
     PrismaModule,
     StorageModule,
-    SecurityModule,
+    RateLimitModule,
+    // Features
     TransfersModule,
     DownloadsModule,
     CleanupModule,

@@ -25,6 +25,16 @@ infra/           Docker Compose for PostgreSQL and MinIO
 scripts/         Start/stop helpers for the dev servers
 ```
 
+The API source is split by layer:
+
+```
+apps/api/src/
+  modules/   Features: transfers (sender), downloads (recipient), cleanup, health
+  core/      Infrastructure: config, database (Prisma), storage (MinIO), rate limiting, logging
+  common/    Plain helpers: crypto (tokens, passwords) and http (pipes, header parsing)
+  generated/ Prisma client, generated; do not edit
+```
+
 ## Getting started
 
 Requirements: Node.js 22.12+ (24 recommended), pnpm 9, Docker Desktop.

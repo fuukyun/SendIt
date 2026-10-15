@@ -2,7 +2,7 @@ import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 import { integrationEnv } from './test/integration/env.js';
 
-/** Integration tests: need Postgres and S3 from `pnpm infra:up`. */
+/** Integration tests: need PostgreSQL and MinIO from `pnpm docker:up`. */
 export default defineConfig({
   test: {
     environment: 'node',

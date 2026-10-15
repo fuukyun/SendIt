@@ -4,9 +4,9 @@ import type { CreateTransferResponse } from '@sendit/shared';
 import request from 'supertest';
 import { AppModule } from '../../src/app.module.js';
 import { configureApp } from '../../src/app.setup.js';
-import { CleanupService } from '../../src/cleanup/cleanup.service.js';
-import { PrismaService } from '../../src/prisma/prisma.service.js';
-import { StorageService } from '../../src/storage/storage.service.js';
+import { CleanupService } from '../../src/modules/cleanup/cleanup.service.js';
+import { PrismaService } from '../../src/core/database/prisma.service.js';
+import { StorageService } from '../../src/core/storage/storage.service.js';
 
 export interface TestContext {
   app: NestExpressApplication;

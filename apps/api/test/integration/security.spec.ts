@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { RATE_LIMITS } from '../../src/security/rate-limits.js';
+import { RATE_LIMITS } from '../../src/core/rate-limit/rate-limits.js';
 import { createTestApp, type TestContext } from './helpers.js';
 
 const UNKNOWN_TOKEN = 'A'.repeat(43);

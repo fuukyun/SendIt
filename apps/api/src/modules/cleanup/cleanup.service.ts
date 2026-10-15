@@ -5,11 +5,11 @@ import {
   type OnApplicationBootstrap,
   type OnModuleDestroy,
 } from '@nestjs/common';
-import { APP_CONFIG } from '../config/config.module.js';
-import type { AppConfig } from '../config/config.js';
-import { TransferStatus, type Prisma, type Transfer } from '../generated/prisma/client.js';
-import { PrismaService } from '../prisma/prisma.service.js';
-import { StorageService } from '../storage/storage.service.js';
+import { APP_CONFIG } from '../../core/config/config.module.js';
+import type { AppConfig } from '../../core/config/config.js';
+import { TransferStatus, type Prisma, type Transfer } from '../../generated/prisma/client.js';
+import { PrismaService } from '../../core/database/prisma.service.js';
+import { StorageService } from '../../core/storage/storage.service.js';
 
 const BATCH_SIZE = 100;
 const MAX_BATCHES_PER_SWEEP = 50;

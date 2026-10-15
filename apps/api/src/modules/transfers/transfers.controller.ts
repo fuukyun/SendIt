@@ -8,9 +8,9 @@ import {
   type CreateTransferInput,
   type RequestPartUrlsInput,
 } from '@sendit/shared';
-import { ZodValidationPipe } from '../common/zod-validation.pipe.js';
-import type { Transfer } from '../generated/prisma/client.js';
-import { RATE_LIMITS } from '../security/rate-limits.js';
+import { ZodValidationPipe } from '../../common/http/zod-validation.pipe.js';
+import type { Transfer } from '../../generated/prisma/client.js';
+import { RATE_LIMITS } from '../../core/rate-limit/rate-limits.js';
 import { ManagedTransfer, ManageTokenGuard } from './manage-token.guard.js';
 import { TransfersService } from './transfers.service.js';
 

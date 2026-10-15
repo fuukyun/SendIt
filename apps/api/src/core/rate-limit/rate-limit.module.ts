@@ -21,4 +21,4 @@ import { RATE_LIMITS } from './rate-limits.js';
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
-export class SecurityModule {}
+export class RateLimitModule {}

@@ -1,9 +1,9 @@
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import type { ErrorRequestHandler } from 'express';
 import helmet from 'helmet';
-import { requestLogger } from './common/logging.js';
-import { APP_CONFIG } from './config/config.module.js';
-import type { AppConfig } from './config/config.js';
+import { requestLogger } from './core/logging/logging.js';
+import { APP_CONFIG } from './core/config/config.module.js';
+import type { AppConfig } from './core/config/config.js';
 
 /**
  * Largest legitimate body: completing a multipart upload with every part's ETag. 10,000 parts

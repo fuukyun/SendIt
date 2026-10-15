@@ -2,9 +2,9 @@ import { Body, Controller, Get, Headers, HttpCode, Param, Post, Req, Res } from 
 import { Throttle } from '@nestjs/throttler';
 import { unlockTransferSchema, type UnlockTransferInput } from '@sendit/shared';
 import type { Request, Response } from 'express';
-import { bearerToken } from '../common/bearer.js';
-import { ZodValidationPipe } from '../common/zod-validation.pipe.js';
-import { RATE_LIMITS } from '../security/rate-limits.js';
+import { bearerToken } from '../../common/http/bearer.js';
+import { ZodValidationPipe } from '../../common/http/zod-validation.pipe.js';
+import { RATE_LIMITS } from '../../core/rate-limit/rate-limits.js';
 import { DownloadsService, PasswordLockedException } from './downloads.service.js';
 
 /** Public endpoints for recipients of a share link. */

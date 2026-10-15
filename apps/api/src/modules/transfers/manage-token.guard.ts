@@ -7,11 +7,11 @@ import {
   createParamDecorator,
 } from '@nestjs/common';
 import type { Request } from 'express';
-import type { Transfer } from '../generated/prisma/client.js';
-import { bearerToken } from '../common/bearer.js';
-import { isUuid } from '../common/uuid.js';
-import { PrismaService } from '../prisma/prisma.service.js';
-import { tokenMatchesHash } from '../security/tokens.js';
+import type { Transfer } from '../../generated/prisma/client.js';
+import { bearerToken } from '../../common/http/bearer.js';
+import { isUuid } from '../../common/http/uuid.js';
+import { PrismaService } from '../../core/database/prisma.service.js';
+import { tokenMatchesHash } from '../../common/crypto/tokens.js';
 
 interface ManagedRequest extends Request {
   transfer?: Transfer;

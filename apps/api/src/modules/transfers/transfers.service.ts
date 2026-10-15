@@ -18,13 +18,13 @@ import {
   type UploadInstructions,
 } from '@sendit/shared';
 import { randomUUID } from 'node:crypto';
-import { APP_CONFIG } from '../config/config.module.js';
-import type { AppConfig } from '../config/config.js';
-import { TransferStatus, type Transfer } from '../generated/prisma/client.js';
-import { PrismaService } from '../prisma/prisma.service.js';
-import { hashPassword } from '../security/passwords.js';
-import { generateToken, hashToken } from '../security/tokens.js';
-import { StorageService } from '../storage/storage.service.js';
+import { APP_CONFIG } from '../../core/config/config.module.js';
+import type { AppConfig } from '../../core/config/config.js';
+import { TransferStatus, type Transfer } from '../../generated/prisma/client.js';
+import { PrismaService } from '../../core/database/prisma.service.js';
+import { hashPassword } from '../../common/crypto/passwords.js';
+import { generateToken, hashToken } from '../../common/crypto/tokens.js';
+import { StorageService } from '../../core/storage/storage.service.js';
 import { sanitizeFileName } from './file-name.js';
 import { partLength, planUpload } from './upload-plan.js';
 

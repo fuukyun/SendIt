@@ -5,7 +5,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['src/**/*.spec.ts', 'test/*.spec.ts'],
+    include: ['src/**/*.spec.ts'],
     env: {
       DATABASE_URL: 'postgresql://unused:unused@localhost:1/unused',
       S3_BUCKET: 'unused',

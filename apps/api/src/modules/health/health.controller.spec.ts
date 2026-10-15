@@ -2,8 +2,8 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { AppModule } from '../src/app.module.js';
-import { configureApp } from '../src/app.setup.js';
+import { AppModule } from '../../app.module.js';
+import { configureApp } from '../../app.setup.js';
 
 describe('GET /api/health', () => {
   let app: NestExpressApplication;
