@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build
+
+  integration:
+    name: Integration tests (Postgres, MinIO)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env
+      - run: docker compose -f infra/docker-compose.yml --env-file .env config --quiet
+
+      # MinIO has no public image; build it from source once and reuse the layer cache.
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: infra/minio
+          tags: sendit/minio:dev
+          load: true
+          cache-from: type=gha,scope=minio
+          cache-to: type=gha,scope=minio,mode=max
+
+      - run: >
+          docker compose -f infra/docker-compose.yml --env-file .env
+          up -d --no-build --wait --wait-timeout 300 postgres minio
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:integration
+
+      - if: failure()
+        run: docker compose -f infra/docker-compose.yml --env-file .env logs

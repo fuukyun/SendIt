@@ -1,0 +1,39 @@
+{
+  "name": "sendit",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.12.1",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "postinstall": "node -e \"fs.existsSync('.env') || fs.copyFileSync('.env.example', '.env')\" && pnpm --filter @sendit/shared build",
+    "start": "pnpm docker:up && pnpm db:migrate && pnpm dev",
+    "stop": "node scripts/stop-dev.mjs && pnpm docker:down",
+    "dev": "node scripts/dev.mjs",
+    "dev:stop": "node scripts/stop-dev.mjs",
+    "docker:up": "docker compose -f infra/docker-compose.yml --env-file .env up -d --wait",
+    "docker:down": "docker compose -f infra/docker-compose.yml --env-file .env down",
+    "docker:logs": "docker compose -f infra/docker-compose.yml --env-file .env logs -f",
+    "db:migrate": "pnpm --filter @sendit/api db:deploy",
+    "db:new": "pnpm --filter @sendit/api db:new",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test",
+    "test": "pnpm -r test",
+    "test:integration": "pnpm --filter @sendit/api test:integration",
+    "lint": "eslint .",
+    "typecheck": "pnpm --filter @sendit/shared build && pnpm -r typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "build": "pnpm -r build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10",
+    "@types/node": "^24",
+    "eslint": "^10",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.2"
+  }
+}

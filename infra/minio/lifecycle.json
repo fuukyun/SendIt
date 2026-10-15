@@ -1,0 +1,10 @@
+{
+  "Rules": [
+    {
+      "ID": "expire-objects-safety-net",
+      "Status": "Enabled",
+      "Filter": { "Prefix": "transfers/" },
+      "Expiration": { "Days": 8 }
+    }
+  ]
+}

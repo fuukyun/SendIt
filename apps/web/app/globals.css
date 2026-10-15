@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+/* Semantic colors; components use these names, so dark mode only changes them here. */
+@theme {
+  --color-brand-50: oklch(0.97 0.02 265);
+  --color-brand-100: oklch(0.93 0.04 265);
+  --color-brand-500: oklch(0.6 0.19 265);
+  --color-brand-600: oklch(0.53 0.2 265);
+  --color-brand-700: oklch(0.46 0.19 265);
+
+  --color-page: oklch(0.985 0.003 265);
+  --color-surface: #fff;
+  --color-subtle: oklch(0.965 0.006 265);
+  --color-line: oklch(0.91 0.01 265);
+  --color-ink: oklch(0.22 0.02 265);
+  --color-muted: oklch(0.5 0.02 265);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-page: oklch(0.17 0.015 265);
+    --color-surface: oklch(0.21 0.017 265);
+    --color-subtle: oklch(0.26 0.018 265);
+    --color-line: oklch(0.32 0.02 265);
+    --color-ink: oklch(0.95 0.01 265);
+    --color-muted: oklch(0.7 0.02 265);
+    --color-brand-50: oklch(0.28 0.06 265);
+    --color-brand-100: oklch(0.33 0.08 265);
+    color-scheme: dark;
+  }
+}
+
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+}

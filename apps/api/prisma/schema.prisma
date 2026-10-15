@@ -1,0 +1,70 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TransferStatus {
+  /// Waiting for the browser to finish uploading.
+  UPLOADING
+  READY
+  /// The stored size did not match the declared size; the object was deleted.
+  REJECTED
+  EXPIRED
+  DELETED
+}
+
+/// One shared file. Each transfer holds exactly one.
+model Transfer {
+  id              String         @id @db.Uuid
+  /// SHA-256 (hex) of the public share token. The raw token is never stored.
+  tokenHash       String         @unique @map("token_hash")
+  /// SHA-256 (hex) of the owner's manage token.
+  manageTokenHash String         @unique @map("manage_token_hash")
+  title           String?
+  message         String?
+  /// argon2id hash; null when the link has no password.
+  passwordHash    String?        @map("password_hash")
+  expiresAt       DateTime       @map("expires_at")
+  /// null = unlimited.
+  maxDownloads    Int?           @map("max_downloads")
+  downloadCount   Int            @default(0) @map("download_count")
+  failedUnlocks   Int            @default(0) @map("failed_unlocks")
+  lockedUntil     DateTime?      @map("locked_until")
+  status          TransferStatus @default(UPLOADING)
+
+  /// Sanitized display name; never used to build the storage key.
+  fileName   String  @map("file_name")
+  size       BigInt
+  storageKey String  @unique @map("storage_key")
+  /// S3 multipart upload id; null for single-PUT uploads.
+  uploadId   String? @map("upload_id")
+  partSize   Int?    @map("part_size")
+  partCount  Int?    @map("part_count")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  downloads DownloadEvent[]
+
+  @@index([status, expiresAt])
+  @@map("transfers")
+}
+
+model DownloadEvent {
+  id         String   @id @default(uuid()) @db.Uuid
+  transferId String   @map("transfer_id") @db.Uuid
+  transfer   Transfer @relation(fields: [transferId], references: [id], onDelete: Cascade)
+  ipHash     String   @map("ip_hash")
+  userAgent  String?  @map("user_agent")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([transferId, createdAt])
+  @@map("download_events")
+}
